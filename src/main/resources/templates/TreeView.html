@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- Required Stylesheets -->
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/bootstrap-treeview.css" rel="stylesheet" />
+
+    <!-- Required Javascript -->
+    <script src="js/jquery-3.4.1.js"></script>
+    <script src="js/bootstrap-treeview.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <title>项目树形控件demo</title>
+
+    <script type="text/javascript">
+
+        function getTreeJson(){
+            $.ajax({
+                type: "GET",
+                url: "/getData",
+                data: null,
+                dataType: "text",
+            success: function(data){
+                var dt = [{
+                    text: '标题',
+                    nodes: eval('[' + data +']')
+                }]
+
+                $('#tree').treeview({
+                    data: dt
+                })
+            },
+            error: function(XMLHttpRequest){
+                alert(XMLHttpRequest.status);
+            }
+        });
+        }
+
+        $(function(){
+            getTreeJson();
+            function getTree(){
+                var tree = [
+                    {
+                        text: "Parent 1",
+                        nodes: [
+                            {
+                                text: "Child 1",
+                                nodes: [
+                                    {
+                                        text: "Grandchild 1"
+                                    },
+                                    {
+                                        text: "Grandchild 2"
+                                    }
+                                ]
+                            },
+                            {
+                                text: "Child 2"
+                            }
+                        ]
+                    },
+                    {
+                        text: "Parent 2"
+                    },
+                    {
+                        text: "Parent 3"
+                    },
+                    {
+                        text: "Parent 4"
+                    },
+                    {
+                        text: "Parent 5"
+                    }
+                ];
+                return tree;
+            }
+
+            var options = {
+                data: getTree(),
+                showCheckbox: true,
+                showIcon: true,
+            }
+
+            // $('#tree').treeview({
+            //     data: getTree()
+            // });
+
+            // function itemOnclick(target){
+            // 	//找到当前节点id
+            // 	var nodeid = $(target).attr('data-nodeid');
+            // 	var tree = $('#tree');
+            // 	//获取当前节点对象
+            // 	var node = tree.treeview('getNode', nodeid);
+            //
+            // 	if(node.state.expanded){
+            // 		//处于展开则折叠
+            // 		tree.treeview('collapseNode', node.nodeId);
+            // 	}else{
+            // 		//展开
+            // 		tree.treeview('expandNode', node.nodeId)
+            // 	}
+            // }
+
+            // function itemOnclick(target){
+            // 	//找到当前节点id
+            // 	var nodeid = $(target).attr('data-nodeid');
+            // 	var tree = $('#tree');
+            // 	//获取当前节点对象
+            // 	var node = tree.treeview('getNode', nodeid);
+            //
+            // 	if(node.state.expanded){
+            // 		//处于展开状态则折叠
+            // 		tree.treeview('collapseNode', node.nodeId);
+            // 	} else {
+            // 		//展开
+            // 		tree.treeview('expandNode', node.nodeId);
+            // 	}
+            // }
+
+
+            // $('#tree').treeview(
+            // 	''
+            // );
+
+            // $('#tree').treeview({
+            // 	data: getTree(),
+            // 	showCheckbox: true,
+            // 	showIcon: true,
+            // });
+            // $('#tree').treeview({
+            //   data: tree
+            // });
+
+            // $('#tree')
+
+            // function itemOnclick(target){
+            //     //找到当前节点id
+            //     var nodeid = $(target).attr('data-nodeid');
+            //     var tree = $('#tree');
+            //     //获取当前节点对象
+            //     var node = tree.treeview('getNode', nodeid);
+            //
+            //     if(node.state.expanded){
+            //         //处于展开状态则折叠
+            //         tree.treeview('collapseNode', node.nodeId);
+            //     } else {
+            //         //展开
+            //         tree.treeview('expandNode', node.nodeId);
+            //     }
+            // }
+        });
+
+        function itemOnclick(target){
+            //找到当前节点id
+            var nodeid = $(target).attr('data-nodeid');
+            var tree = $('#tree');
+            //获取当前节点对象
+            var node = tree.treeview('getNode', nodeid);
+
+            if(node.state.expanded){
+                //处于展开状态则折叠
+                tree.treeview('collapseNode', node.nodeId);
+            } else {
+                //展开
+                tree.treeview('expandNode', node.nodeId);
+            }
+        }
+
+
+
+
+
+
+
+
+
+    </script>
+</head>
+<body>
+<div>111</div>
+<div class="container">
+    <div class="row" >
+        <div class="col-sm-6 col-md-offset-3" id="tree"></div>
+        <!-- <div class="col-sm-6" id="aa"></div> -->
+    </div>
+</div>
+
+
+</body>
+</html>
